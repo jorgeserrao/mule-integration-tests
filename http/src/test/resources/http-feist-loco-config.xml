@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xsi:schemaLocation="
+               http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+               http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
+               http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+
+    <http:listener-config name="listenerConfig">
+        <http:listener-connection host="localhost" port="${port}"/>
+    </http:listener-config>
+
+    <http:request-config name="http_request_config" sendBodyMode="AUTO" enableCookies="true" parseResponse="true" followRedirects="true" requestStreamingMode="AUTO">
+        <http:request-connection usePersistentConnections="true" maxConnections="-1" connectionIdleTimeout="180000" protocol="HTTP" host="localhost" port="${port}"/>
+    </http:request-config>
+
+
+    <flow name="empty">
+        <http:listener config-ref="listenerConfig" path="feistLoco"/>
+        <http:request config-ref="http_request_config" path="/content" method="GET">
+            <repeatable-in-memory-stream initialBufferSize="1" bufferSizeIncrement="0" maxBufferSize="1" bufferUnit="MB" />
+        </http:request>
+
+        <scatter-gather>
+            <processor-chain>
+                <object-to-string-transformer />
+            </processor-chain>
+
+            <processor-chain>
+                <object-to-string-transformer />
+            </processor-chain>
+        </scatter-gather>
+        <!--
+                  <object-to-string-transformer doc:name="Object to String"/>
+        -->
+        <set-payload value="Mule4.StreamingTesting - The test has finished (so far)" />
+
+    </flow>
+
+    <flow name="simple">
+        <http:listener config-ref="listenerConfig" path="/content"/>
+        <component class="org.mule.test.module.http.functional.listener.FeistLocoTestCase" />
+    </flow>
+
+
+</mule>
