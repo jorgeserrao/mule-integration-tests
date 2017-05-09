@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.mule.tests</groupId>
-        <artifactId>mule-tests</artifactId>
+        <artifactId>mule-extensions-integration-tests</artifactId>
         <version>4.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>mule-tests-integration</artifactId>
@@ -384,12 +384,12 @@
             <version>${project.version}</version>
             <classifier>mule-plugin</classifier>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>joda-time</artifactId>
-                    <groupId>joda-time</groupId>
-                </exclusion>
-            </exclusions>
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<artifactId>joda-time</artifactId>-->
+                    <!--<groupId>joda-time</groupId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
         </dependency>
     </dependencies>
 </project>
