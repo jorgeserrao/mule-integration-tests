@@ -20,7 +20,7 @@
     <flow name="empty">
         <http:listener config-ref="listenerConfig" path="feistLoco"/>
         <http:request config-ref="http_request_config" path="/content" method="GET">
-            <repeatable-in-memory-stream initialBufferSize="1" bufferSizeIncrement="0" maxBufferSize="1" bufferUnit="MB" />
+            <repeatable-in-memory-stream initialBufferSize="1000" bufferSizeIncrement="0" maxBufferSize="1000" bufferUnit="KB" />
         </http:request>
 
         <scatter-gather>
